@@ -1,12 +1,9 @@
-export const CONNECT_TO_STREAM = 'CONNECT_TO_STREAM';
-export function connectToStream(videoId) {
-  const request = new Promise((resolve, reject) => {
-    console.log("Connecting to stream!");
-    resolve({});
-  });
+import facebookConnector from '../services/facebook';
 
+export const ADD_COMMENTS = 'ADD_COMMENTS';
+export function addComments(comments) {
   return {
-    type: CONNECT_TO_STREAM,
-    payload: request
-  }
+    type: ADD_COMMENTS,
+    payload: comments
+  };
 }
