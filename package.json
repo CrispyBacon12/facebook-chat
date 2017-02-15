@@ -5,10 +5,9 @@
   "main": "index.js",
   "repository": "git@github.com:CrispyBacon12/facebook-chat.git",
   "scripts": {
-    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
+    "start": "concurrently \"webpack-dev-server\" \"nodemon ./server\"",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "test:watch": "npm run test -- --watch",
-    "serve": "concurrently \"webpack-dev-server\" \"nodemon ./server\""
+    "test:watch": "npm run test -- --watch"
   },
   "author": "",
   "license": "ISC",
