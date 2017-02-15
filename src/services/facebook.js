@@ -5,12 +5,6 @@ import facebook from './facebook-embed';
 class Facebook {
   constructor() {
     this.socket = io();
-
-    facebook.then(fb => {
-      
-    });
-
-    this.socket.on(events.SEND_COMMENTS, this.handleComments);
   }
 
   login() {
@@ -36,21 +30,24 @@ class Facebook {
     });    
   }
 
-  connectToStream(videoId) {
-    return this.login().then(accessToken => {
-      console.log("Got access token! :D", accessToken);
-      return new Promise((resolve, reject) => {
-        this.socket.emit(events.CONNECT_TO_STREAM, {videoId, accessToken});
+  connectToStream(videoId, cb) {
+    this.login().then(accessToken => {
+      this.clearCommentsHandler();
 
-        this.socket.once(events.CONNECTED, () => {
-          resolve();
-        });
-      });
+      this.socket.emit(events.CONNECT_TO_STREAM, {videoId, accessToken});
+      this.setCommentsHandler(cb);
     });
   }
 
-  handleComments(comments) {
-    console.log("Look I got these comments!", comments);
+  clearCommentsHandler() {
+    if (this.commentsHandler) {
+      this.socket.removeListener(events.SEND_COMMENTS, this.commentsHandler);
+    }
+  }
+
+  setCommentsHandler(cb) {
+    this.commentsHandler = cb;
+    this.socket.on(events.SEND_COMMENTS, cb);
   }
 }
 

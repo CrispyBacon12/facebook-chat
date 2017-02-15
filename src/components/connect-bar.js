@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { connectToStream } from '../actions';
+import { addComments } from '../actions';
+import facebookConnector from '../services/facebook';
+
+const facebook = facebookConnector();
 
 class ConnectBar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {videoId: '1415411995149859'};
+    this.facebook = facebookConnector();
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -28,13 +32,15 @@ class ConnectBar extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
-    this.props.connectToStream(this.state.videoId);
+    
+    const connection = this.facebook.connectToStream(this.state.videoId, (comments) => {
+      this.props.addComments(comments);
+    });
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({connectToStream}, dispatch);
+  return bindActionCreators({addComments}, dispatch);
 }
 
 export default connect(null, mapDispatchToProps)(ConnectBar)
