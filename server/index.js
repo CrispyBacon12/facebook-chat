@@ -15,7 +15,7 @@ io.on('connection', (socket) => {
   socket.on(events.CONNECT_TO_STREAM, ({videoId, accessToken}) => {
     facebook.setAccessToken(accessToken);
     
-    const commentsEmitter = facebook.fetchExistingComments(videoId);
+    const commentsEmitter = facebook.fetchComments(videoId);
 
     commentsEmitter.on('comments', (res) => {
       socket.emit(events.SEND_COMMENTS, res);
