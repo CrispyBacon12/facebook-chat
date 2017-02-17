@@ -6,6 +6,7 @@ exports.fetchExistingComments = (videoId, accessToken) => {
   const emitter = new EventEmitter();
   const MAX_PAGES = 2;
 
+  console.info('Query for first batch');
   graph.get(videoId, { fields: ['id', 'comments.limit(100)'].join(',') }, (err, res) => {
     if (err) {
       return emitter.emit('error', err);
@@ -20,11 +21,12 @@ exports.fetchExistingComments = (videoId, accessToken) => {
 
 function nextPage(emitter, paging, numRecursions) {
   // was this the last page?
-  if (!paging.next || numRecursions < 0) {
+  if (!paging.next || numRecursions <= 0) {
     return;
   }
 
   // otherwise get the next page and emit it on success
+  console.info("Querying for", paging.next);
   graph.get(paging.next, (err, res) => {
     if (err) {
       return emitter.emit('error', err);
