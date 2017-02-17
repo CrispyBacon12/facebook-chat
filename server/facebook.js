@@ -4,15 +4,15 @@ const graph = require('fbgraph');
 
 exports.fetchExistingComments = (videoId, accessToken) => {
   const emitter = new EventEmitter();
-  const MAX_PAGES = 5;
+  const MAX_PAGES = 2;
 
-  graph.get(videoId, { fields: ['id', 'comments'].join(',') }, (err, res) => {
+  graph.get(videoId, { fields: ['id', 'comments.limit(100)'].join(',') }, (err, res) => {
     if (err) {
       return emitter.emit('error', err);
     }
 
     emitter.emit('comments', res.comments.data);
-    nextPage(emitter, res.comments.paging, MAX_PAGES);
+    nextPage(emitter, res.comments.paging, MAX_PAGES-1);
   });
 
   return emitter;
@@ -38,3 +38,5 @@ function nextPage(emitter, paging, numRecursions) {
 exports.setAccessToken = (accessToken) => {
   graph.setAccessToken(accessToken);
 }
+
+exports.subs
