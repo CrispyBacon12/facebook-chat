@@ -29,6 +29,10 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
+  socket.on(events.APPROVE_COMMENT, (comment) => {
+    socket.broadcast.emit(events.APPROVE_COMMENT, comment);
+  });
 });
 
 http.listen(3000, () => {

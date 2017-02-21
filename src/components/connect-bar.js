@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { addComments } from '../actions';
-import facebookConnector from '../services/facebook';
-
-const facebook = facebookConnector();
 
 class ConnectBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {videoId: ''};
-    this.facebook = facebookConnector();
+    this.state = {videoId: '1415411995149859'};
+    this.facebook = this.props.facebook;
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);

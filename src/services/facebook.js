@@ -49,6 +49,15 @@ class Facebook {
     this.commentsHandler = cb;
     this.socket.on(events.SEND_COMMENTS, cb);
   }
+
+  broadcastApproveComment(comment) {
+    console.log("Approving comment on socket", this.socket);
+    this.socket.emit(events.APPROVE_COMMENT, comment);
+  }
+
+  subscribeApprovals(cb) {
+    this.socket.on(events.APPROVE_COMMENT, cb);
+  }
 }
 
 export default function() {
