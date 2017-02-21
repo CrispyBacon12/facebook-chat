@@ -16,7 +16,7 @@ class CommentsList extends Component {
   render() {
     return (
       <ul className="mt-4 mb-4 list-group">
-        { this.props.comments.map(comment => <CommentsListItem key={comment.id} comment={comment} onClick={this.onCommentClick} />) }
+        { this.props.comments.map(comment => <CommentsListItem key={comment.id} comment={comment} approvedComments={this.props.approvedComments} onClick={this.onCommentClick} />) }
       </ul>
     );
   }
@@ -27,8 +27,8 @@ class CommentsList extends Component {
   }
 }
 
-function mapStateToProps({comments}) {
-  return { comments };
+function mapStateToProps({comments, approvedComments}) {
+  return { comments, approvedComments };
 }
 
 function mapDispatchToProps(dispatch) {

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { approveComment } from '../actions';
 
-import CommentsListItem from './comments-list-item';
+import ReadOnlyCommentsListItem from './readonly-comments-list-item';
 
 class PresenterRoot extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class PresenterRoot extends Component {
   render() {
     return (
       <ul className="mt-4 mb-4 list-group">
-        { this.props.approvedComments.map(comment => <CommentsListItem key={comment.id} comment={comment} onClick={() => {}} />) }
+        { this.props.approvedComments.map(comment => <ReadOnlyCommentsListItem key={comment.id} comment={comment} />) }
       </ul>
     );
   }

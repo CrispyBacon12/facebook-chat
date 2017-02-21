@@ -6,4 +6,3 @@ export const rootReducer = combineReducers({
   comments: CommentsReducer,
   approvedComments: ApprovedCommentsReducer
 });
-
