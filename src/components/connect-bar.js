@@ -7,7 +7,7 @@ class ConnectBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {videoId: '1415411995149859'};
+    this.state = {videoId: ''};
     this.facebook = this.props.facebook;
 
     this.onInputChange = this.onInputChange.bind(this);
