@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { approveComment } from '../actions';
+import { toggleCommentApproval } from '../actions';
 
 import CommentsListItem from './comments-list-item';
 
@@ -22,8 +22,13 @@ class CommentsList extends Component {
   }
 
   onCommentClick(comment) {
-    this.facebook.broadcastApproveComment(comment);
-    this.props.approveComment(comment);
+    this.props.toggleCommentApproval(comment, this.props.approvedComments, (approved) => {
+      if (approved) {
+        this.facebook.broadcastDisapproveComment(comment);
+      } else {
+        this.facebook.broadcastApproveComment(comment);
+      }
+    });
   }
 }
 
@@ -32,7 +37,7 @@ function mapStateToProps({comments, approvedComments}) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({approveComment}, dispatch);
+  return bindActionCreators({toggleCommentApproval}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CommentsList)

@@ -33,6 +33,10 @@ io.on('connection', (socket) => {
   socket.on(events.APPROVE_COMMENT, (comment) => {
     socket.broadcast.emit(events.APPROVE_COMMENT, comment);
   });
+
+  socket.on(events.DISAPPROVE_COMMENT, (comment) => {
+    socket.broadcast.emit(events.DISAPPROVE_COMMENT, comment);
+  });
 });
 
 http.listen(3000, () => {

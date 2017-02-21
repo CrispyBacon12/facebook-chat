@@ -15,3 +15,23 @@ export function approveComment(comment) {
     payload: comment
   }
 }
+
+export const DISAPPROVE_COMMENT = 'DISAPPROVE_COMMENT';
+export function disapproveComment(comment) {
+  return {
+    type: DISAPPROVE_COMMENT,
+    payload: comment
+  }
+}
+
+export function toggleCommentApproval(comment, approvedComments, cb) {
+  const commentIsApproved = approvedComments.some(approvedComment => approvedComment.id === comment.id);
+
+  cb(commentIsApproved);
+
+  if (commentIsApproved) {
+    return disapproveComment(comment);
+  }
+
+  return approveComment(comment);
+}

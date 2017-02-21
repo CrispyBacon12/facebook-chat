@@ -55,8 +55,17 @@ class Facebook {
     this.socket.emit(events.APPROVE_COMMENT, comment);
   }
 
+  broadcastDisapproveComment(comment) {
+    console.log('Disapproving comment on socket', this.socket);
+    this.socket.emit(events.DISAPPROVE_COMMENT, comment);
+  }
+
   subscribeApprovals(cb) {
     this.socket.on(events.APPROVE_COMMENT, cb);
+  }
+
+  subscribeDisapproves(cb) {
+    this.socket.on(events.DISAPPROVE_COMMENT, cb);
   }
 }
 

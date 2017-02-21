@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import facebookConnector from '../services/facebook';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { approveComment } from '../actions';
+import { approveComment, disapproveComment } from '../actions';
 
 import ReadOnlyCommentsListItem from './readonly-comments-list-item';
 
@@ -13,6 +13,10 @@ class PresenterRoot extends Component {
     this.facebook = facebookConnector();
     this.facebook.subscribeApprovals(comment => {
       this.props.approveComment(comment);
+    });
+
+    this.facebook.subscribeDisapproves(comment => {
+      this.props.disapproveComment(comment);
     });
   }
 
@@ -26,7 +30,7 @@ class PresenterRoot extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({approveComment}, dispatch);
+  return bindActionCreators({approveComment, disapproveComment}, dispatch);
 }
 
 function mapStateToProps({ approvedComments }) {
