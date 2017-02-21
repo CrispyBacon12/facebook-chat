@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import TimeAgo from 'react-timeago'
 
 export default class CommentsListItem extends Component {
   render() {
@@ -10,7 +11,7 @@ export default class CommentsListItem extends Component {
         <div className="col-sm-12">
           <div className="d-flex w-100 justify-content-between">
             <p className="mb-1 text-primary">{comment.from.name}</p>
-            <small>{comment.created_time}</small>
+            <small><TimeAgo date={comment.created_time} /></small>
           </div>
           <p className="mb-1">{comment.message}</p>
         </div>
